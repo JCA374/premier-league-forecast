@@ -240,7 +240,7 @@ def calculate_current_standings_from_url():
     """Calculate current SHL standings using latest scraped regular-season results."""
     try:
         from datetime import datetime
-        from src.data.scraper import SHLScraper
+        from shl.data.scraper import SHLScraper
 
         scraper = SHLScraper()
         current_year = datetime.now().year

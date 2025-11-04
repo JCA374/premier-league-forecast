@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 - `app.py` hosts the Streamlit UI; each navigation tab calls a page-level function.  
-- SHL-specific logic is organized under `src/`: scraping and cleaning in `src/data/`, modeling in `src/models/`, simulation engines in `src/simulation/`, analytics in `src/analysis/`, visualization helpers in `src/visualization/`, and database utilities in `src/database/`.  
+- SHL-specific logic is organized under `shl/`: scraping and cleaning in `shl/data/`, modeling in `shl/models/`, simulation engines in `shl/simulation/`, analytics in `shl/analysis/`, visualization helpers in `shl/visualization/`, and database utilities in `shl/database/`.  
 - Tests mirror this layout inside `tests/`. Reusable notebooks or scripts live in `reports/` and `scripts/`.  
 - Data artifacts are kept in `data/` (`raw/`, `clean/`, `db/`), with the default SQLite file stored at `data/db/shl.db`.
 

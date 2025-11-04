@@ -1,4 +1,4 @@
-#!/home/jonas/Code/SHL/allsvenskan/.venv/bin/python3
+#!/home/jonas/Code/SHL/shl/.venv/bin/python
 import sys
 from tld.utils import update_tld_names_cli
 if __name__ == '__main__':

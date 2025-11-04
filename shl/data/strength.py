@@ -6,13 +6,13 @@ from typing import Dict, List, Optional
 
 # Import odds integration components
 try:
-    from src.data.odds_strength_extractor import (
+    from shl.data.odds_strength_extractor import (
         OddsStrengthExtractor, 
         AdaptiveStrengthCalculator,
         integrate_odds_strengths_with_historical
     )
-    from src.data.odds_api import OddsAPI
-    from src.data.odds_schema import OddsData
+    from shl.data.odds_api import OddsAPI
+    from shl.data.odds_schema import OddsData
     ODDS_AVAILABLE = True
 except ImportError:
     ODDS_AVAILABLE = False
@@ -524,7 +524,7 @@ class TeamStrengthCalculator:
             
             # Initialize odds API if available
             if api_key and ODDS_AVAILABLE:
-                from src.data.odds_api import OddsAPI
+                from shl.data.odds_api import OddsAPI
                 odds_api = OddsAPI(api_key)
                 
                 # Fetch live odds data

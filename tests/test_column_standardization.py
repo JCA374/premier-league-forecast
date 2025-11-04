@@ -2,9 +2,9 @@ import pandas as pd
 import sys
 import os
 
-# Add src directory to path
+# Add project root to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 def test_column_standardization():
     """Test that column standardization works correctly"""

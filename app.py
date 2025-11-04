@@ -8,18 +8,18 @@ import plotly.graph_objects as go
 from sqlalchemy import text
 
 # Import custom modules
-from src.data.scraper import SHLScraper
-from src.data.cleaner import DataCleaner
-from src.data.strength import TeamStrengthCalculator
-from src.models.poisson_model import PoissonModel
-from src.simulation.simulator import MonteCarloSimulator
-from src.analysis.aggregator import ResultsAggregator
-from src.visualization.dashboard import Dashboard
-from src.database.db_manager import DatabaseManager
-from src.data.odds_api import OddsAPI
-from src.data.odds_schema import OddsData, OddsRecord
-from src.models.hybrid_model import HybridPoissonOddsModel
-from src.utils.odds_converter import remove_margin, calculate_margin
+from shl.data.scraper import SHLScraper
+from shl.data.cleaner import DataCleaner
+from shl.data.strength import TeamStrengthCalculator
+from shl.models.poisson_model import PoissonModel
+from shl.simulation.simulator import MonteCarloSimulator
+from shl.analysis.aggregator import ResultsAggregator
+from shl.visualization.dashboard import Dashboard
+from shl.database.db_manager import DatabaseManager
+from shl.data.odds_api import OddsAPI
+from shl.data.odds_schema import OddsData, OddsRecord
+from shl.models.hybrid_model import HybridPoissonOddsModel
+from shl.utils.odds_converter import remove_margin, calculate_margin
 
 # Page configuration
 st.set_page_config(
@@ -677,7 +677,7 @@ def simulation_page():
             upcoming_team_set = set(fixtures_df['HomeTeam'].dropna()) | set(fixtures_df['AwayTeam'].dropna())
 
         # Calculate current standings from live data
-        from src.utils.helpers import calculate_current_standings_from_url, calculate_current_standings, get_current_points_table
+        from shl.utils.helpers import calculate_current_standings_from_url, calculate_current_standings, get_current_points_table
 
         # Try to get live standings first, fallback to local data
         current_standings_df = calculate_current_standings_from_url()
@@ -723,7 +723,7 @@ def simulation_page():
         # Show fixtures information
         if fixtures_source == "upcoming_fixtures":
             # Load and display info about upcoming fixtures using direct method
-            from src.simulation.simulator import MonteCarloSimulator
+            from shl.simulation.simulator import MonteCarloSimulator
             temp_fixtures = MonteCarloSimulator._load_upcoming_fixtures_directly(upcoming_fixtures_path)
             if not temp_fixtures.empty:
                 st.info(f"📅 {len(results_df)} matches completed, {len(temp_fixtures)} upcoming fixtures loaded from upcoming_fixtures.csv")
@@ -790,8 +790,8 @@ def simulation_page():
                         progress_bar = st.progress(0)
 
                         # Initialize model and simulator
-                        from src.models.poisson_model import PoissonModel
-                        from src.simulation.simulator import MonteCarloSimulator
+                        from shl.models.poisson_model import PoissonModel
+                        from shl.simulation.simulator import MonteCarloSimulator
 
                         model = PoissonModel()
                         if os.path.exists("models/poisson_params.pkl"):
@@ -811,7 +811,7 @@ def simulation_page():
                                 odds_data = None
 
                                 if use_odds_integration and st.session_state.get('odds_fetched', False):
-                                    from src.models.hybrid_model import HybridPoissonOddsModel
+                                    from shl.models.hybrid_model import HybridPoissonOddsModel
                                     hybrid_model = HybridPoissonOddsModel(model)
                                     odds_data = st.session_state.get('odds_data')
                                     st.info("🔮 Using Hybrid Model (Poisson + Odds)")
@@ -923,7 +923,7 @@ def fixture_results_page():
 
     try:
         # Import column standardizer
-        from src.utils.column_standardizer import ColumnStandardizer
+        from shl.utils.column_standardizer import ColumnStandardizer
         
         # Load fixture predictions with error handling
         try:
@@ -1349,7 +1349,7 @@ def odds_integration_page():
         # Try to load existing model from disk
         if os.path.exists("models/poisson_params.pkl"):
             try:
-                from src.models.poisson_model import PoissonModel
+                from shl.models.poisson_model import PoissonModel
                 model = PoissonModel()
                 model.load("models/poisson_params.pkl")
                 st.session_state.poisson_model = model

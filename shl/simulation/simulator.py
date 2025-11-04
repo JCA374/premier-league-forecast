@@ -48,10 +48,7 @@ class MonteCarloSimulator:
         """Load upcoming fixtures directly from CSV with robust parsing"""
         try:
             # Import column standardizer
-            import sys
-            import os
-            sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-            from src.utils.column_standardizer import ColumnStandardizer
+            from shl.utils.column_standardizer import ColumnStandardizer
             
             # Read CSV with error handling
             df = pd.read_csv(filepath, on_bad_lines='skip')

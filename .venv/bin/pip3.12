@@ -1,4 +1,4 @@
-#!/home/jonas/Code/SHL/allsvenskan/.venv/bin/python3
+#!/home/jonas/Code/SHL/shl/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

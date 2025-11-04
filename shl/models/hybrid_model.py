@@ -4,10 +4,10 @@ from typing import Tuple, Dict, Optional, List
 from datetime import datetime
 import pandas as pd
 
-from src.models.poisson_model import PoissonModel
-from src.data.odds_schema import OddsRecord
-from src.utils.odds_converter import remove_margin, calculate_implied_probabilities
-from src.config.config_loader import get_weights_config
+from shl.models.poisson_model import PoissonModel
+from shl.data.odds_schema import OddsRecord
+from shl.utils.odds_converter import remove_margin, calculate_implied_probabilities
+from shl.config.config_loader import get_weights_config
 
 logger = logging.getLogger(__name__)
 

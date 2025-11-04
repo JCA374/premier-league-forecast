@@ -20,11 +20,11 @@ class Dashboard:
             
             sim_results = pd.read_csv("reports/simulations/sim_results.csv")
             
-            from src.analysis.aggregator import ResultsAggregator
+            from shl.analysis.aggregator import ResultsAggregator
             aggregator = ResultsAggregator()
             
             # Load current standings
-            from src.utils.helpers import calculate_current_standings_from_url
+            from shl.utils.helpers import calculate_current_standings_from_url
             current_standings_df = calculate_current_standings_from_url()
             
             # Generate all analyses

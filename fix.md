@@ -143,7 +143,7 @@ class ColumnStandardizer:
 **Update fixtures_cleaner.py** to ensure standardized output:
 ```python
 # In clean_fixtures_file method, before returning:
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 # ... existing code ...
 fixtures_df = pd.DataFrame(fixtures)
@@ -154,7 +154,7 @@ return fixtures_df
 **Update simulator.py** to handle any format:
 ```python
 # At the beginning of load_fixtures method:
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 def load_fixtures(self, fixtures_path: str) -> pd.DataFrame:
     """Load and standardize fixtures"""
@@ -172,7 +172,7 @@ def load_fixtures(self, fixtures_path: str) -> pd.DataFrame:
 **Update app.py** fixture loading:
 ```python
 # In fixture_results_page function:
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 # Load upcoming fixtures
 fixtures_df = pd.read_csv("data/clean/upcoming_fixtures.csv", parse_dates=['Date'])
@@ -194,7 +194,7 @@ Create `scripts/migrate_column_names.py`:
 ```python
 import os
 import pandas as pd
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 def migrate_csv_files():
     """Migrate all CSV files to use standardized column names"""
@@ -233,7 +233,7 @@ Create `tests/test_column_standardization.py`:
 ```python
 import pandas as pd
 import pytest
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 def test_column_standardization():
     """Test that column standardization works correctly"""

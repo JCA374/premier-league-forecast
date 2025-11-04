@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from typing import Dict, List
 import logging
 
-from src.data.strength import TeamStrengthCalculator
-from src.data.odds_schema import OddsRecord
+from shl.data.strength import TeamStrengthCalculator
+from shl.data.odds_schema import OddsRecord
 
 logger = logging.getLogger(__name__)
 
@@ -146,17 +146,17 @@ def validate_implementation() -> Dict:
     
     try:
         # Test odds strength extractor
-        from src.data.odds_strength_extractor import OddsStrengthExtractor
+        from shl.data.odds_strength_extractor import OddsStrengthExtractor
         extractor = OddsStrengthExtractor()
         validation_results['odds_extractor_available'] = True
         
         # Test adaptive calculator
-        from src.data.odds_strength_extractor import AdaptiveStrengthCalculator
+        from shl.data.odds_strength_extractor import AdaptiveStrengthCalculator
         adaptive_calc = AdaptiveStrengthCalculator()
         validation_results['adaptive_calculator_available'] = True
         
         # Test integration function
-        from src.data.odds_strength_extractor import integrate_odds_strengths_with_historical
+        from shl.data.odds_strength_extractor import integrate_odds_strengths_with_historical
         validation_results['integration_function_available'] = True
         
         # Test enhanced team calculator

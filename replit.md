@@ -27,27 +27,27 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 
 ## Key Components
 
-### Data Layer (`src/data/`)
+### Data Layer (`shl/data/`)
 - **SHLScraper**: Web scraper for SHL regular-season data sourced from stats.swehockey.se
 - **DataCleaner**: Normalizes team names, parses dates, splits results from fixtures
 - **TeamStrengthCalculator**: Computes attack/defense strengths from historical performance
 
-### Modeling Layer (`src/models/`)
+### Modeling Layer (`shl/models/`)
 - **PoissonModel**: Statistical model for predicting match outcomes using Poisson distribution
 - Uses team attack rates, defense rates, and home advantage factors
 - Implements Maximum Likelihood Estimation for parameter optimization
 
-### Simulation Layer (`src/simulation/`)
+### Simulation Layer (`shl/simulation/`)
 - **MonteCarloSimulator**: Runs thousands of season simulations
 - Generates probability distributions for final league positions
 - Uses randomized goal generation based on Poisson model predictions
 
-### Analysis Layer (`src/analysis/`)
+### Analysis Layer (`shl/analysis/`)
 - **ResultsAggregator**: Processes simulation results into meaningful statistics
 - Calculates championship odds, relegation probabilities, European qualification chances
 - Generates position probability matrices and confidence intervals
 
-### Visualization Layer (`src/visualization/`)
+### Visualization Layer (`shl/visualization/`)
 - **Dashboard**: Streamlit-based interactive dashboard
 - Multiple visualization types: bar charts, probability distributions, comparison tables
 - Real-time updates based on user interactions

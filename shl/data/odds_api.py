@@ -5,9 +5,9 @@ from typing import Dict, List, Optional
 import time
 import logging
 import os
-from src.config.config_loader import get_odds_config, get_api_config
-from src.data.odds_schema import OddsRecord
-from src.utils.odds_converter import validate_odds, find_best_odds
+from shl.config.config_loader import get_odds_config, get_api_config
+from shl.data.odds_schema import OddsRecord
+from shl.utils.odds_converter import validate_odds, find_best_odds
 
 logger = logging.getLogger(__name__)
 

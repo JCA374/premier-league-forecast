@@ -2,9 +2,9 @@ import os
 import pandas as pd
 import sys
 
-# Add src directory to path so we can import ColumnStandardizer
+# Add project root to path so we can import ColumnStandardizer
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.utils.column_standardizer import ColumnStandardizer
+from shl.utils.column_standardizer import ColumnStandardizer
 
 def migrate_csv_files():
     """Migrate all CSV files to use standardized column names"""

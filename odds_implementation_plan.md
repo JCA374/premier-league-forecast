@@ -2,7 +2,7 @@
 
 ### Step 14: Smart Probability Regularization
 ```python
-# src/models/regularization.py
+# shl/models/regularization.py
 import numpy as np
 from scipy import stats
 import structlog
@@ -151,7 +151,7 @@ class ProbabilityRegularizer:
 
 ### Step 15: Comprehensive Evaluation Framework
 ```python
-# src/evaluation/comprehensive_metrics.py
+# shl/evaluation/comprehensive_metrics.py
 import numpy as np
 from sklearn.calibration import calibration_curve
 from typing import List, Dict, Tuple
@@ -441,7 +441,7 @@ class ComprehensiveEvaluator:
 
 ### Step 16: Production Monitoring & Alerting System
 ```python
-# src/monitoring/production_monitor.py
+# shl/monitoring/production_monitor.py
 import streamlit as st
 from datetime import datetime, timedelta
 import pandas as pd
@@ -760,7 +760,7 @@ class ProductionMonitor:
 
 ### Step 9: Comprehensive Volatility Analysis
 ```python
-# src/analysis/volatility.py
+# shl/analysis/volatility.py
 import numpy as np
 import pandas as pd
 from typing import List, Dict, Tuple
@@ -898,7 +898,7 @@ def test_volatility_calculation():
 
 ### Step 10: Adaptive Window Selection
 ```python
-# src/analysis/adaptive_window.py
+# shl/analysis/adaptive_window.py
 from sklearn.model_selection import TimeSeriesSplit
 from typing import List, Tuple
 import numpy as np
@@ -1022,7 +1022,7 @@ class AdaptiveStrengthCalculator:
 
 ### Step 11: Multi-Source Confidence System
 ```python
-# src/models/confidence_system.py
+# shl/models/confidence_system.py
 import numpy as np
 from typing import List, Dict, Optional
 import structlog
@@ -1230,7 +1230,7 @@ def adjust_weight_by_confidence(base_weight: float, confidence: Dict[str, float]
 
 ### Step 1: Data Schema & Validation
 ```python
-# src/data/odds_schema.py
+# shl/data/odds_schema.py
 from pydantic import BaseModel, validator
 from datetime import datetime
 
@@ -1268,7 +1268,7 @@ class OddsData:
 
 ### Step 2: Robust Odds Converter with Logging
 ```python
-# src/utils/odds_converter.py
+# shl/utils/odds_converter.py
 import logging
 from typing import Tuple, Optional
 
@@ -1303,7 +1303,7 @@ def remove_margin(home_odds: float, draw_odds: float, away_odds: float) -> Tuple
 
 ### Step 3: Configuration Management & Testing
 ```python
-# src/config/odds_config.yaml
+# shl/config/odds_config.yaml
 odds_integration:
   weights:
     games_1_2: 0.7
@@ -1318,14 +1318,14 @@ odds_integration:
     ttl_seconds: 3600
     max_size: 10000
 
-# src/config/config_loader.py
+# shl/config/config_loader.py
 import yaml
 from functools import lru_cache
 
 @lru_cache(maxsize=1)
 def load_config():
     """Load configuration with caching"""
-    with open('src/config/odds_config.yaml', 'r') as f:
+    with open('shl/config/odds_config.yaml', 'r') as f:
         return yaml.safe_load(f)
 
 # tests/test_odds_converter.py
@@ -1352,7 +1352,7 @@ def test_arbitrage_detection():
 
 ### Step 4: API Abstraction Layer
 ```python
-# src/data/odds_source.py
+# shl/data/odds_source.py
 from abc import ABC, abstractmethod
 from typing import Dict, List
 import redis
@@ -1405,7 +1405,7 @@ class APIOpdsSource(OddsSource):
 
 ### Step 5: Robust Hybrid Model with Validation
 ```python
-# src/models/hybrid_model.py
+# shl/models/hybrid_model.py
 import structlog
 from src.config.config_loader import load_config
 
@@ -1478,7 +1478,7 @@ class HybridModel:
 
 ### Step 6: Parallelized Monte Carlo Simulation
 ```python
-# src/simulation/parallel_simulator.py
+# shl/simulation/parallel_simulator.py
 from joblib import Parallel, delayed
 import numpy as np
 from typing import List, Dict
@@ -1572,7 +1572,7 @@ class ParallelOddsSimulator:
 
 ### Step 7: Cached Odds Strength Calculator
 ```python
-# src/analysis/odds_strength.py
+# shl/analysis/odds_strength.py
 from functools import lru_cache
 from typing import Dict, Tuple, List
 import numpy as np
@@ -1733,7 +1733,7 @@ class OddsStrengthCalculator:
 
 ### Step 8: Intelligent Strength Blender
 ```python
-# src/models/strength_blender.py
+# shl/models/strength_blender.py
 import numpy as np
 from typing import Dict, Optional
 import structlog
@@ -1881,7 +1881,7 @@ class StrengthBlender:
 
 ### Step 9: Team Volatility Calculator
 ```python
-# src/analysis/volatility.py
+# shl/analysis/volatility.py
 def calculate_team_volatility(team_results, window=10):
     """Calculate how volatile a team's performance is"""
     if len(team_results) < window:
@@ -1902,7 +1902,7 @@ def calculate_team_volatility(team_results, window=10):
 
 ### Step 10: Dynamic Lookback Window
 ```python
-# src/analysis/dynamic_window.py
+# shl/analysis/dynamic_window.py
 def find_optimal_lookback(team, results_df):
     """Find best historical window for each team"""
     windows = [5, 10, 15, 20]
@@ -1930,7 +1930,7 @@ def find_optimal_lookback(team, results_df):
 
 ### Step 11: Confidence-Based Weighting
 ```python
-# src/models/confidence_weight.py
+# shl/models/confidence_weight.py
 def calculate_odds_confidence(bookmaker_odds_list):
     """Calculate confidence based on bookmaker agreement"""
     if len(bookmaker_odds_list) < 3:
@@ -1956,7 +1956,7 @@ def adjust_weight_by_confidence(base_weight, odds_sources):
 
 ### Step 12: Grid Search with Cross-Validation
 ```python
-# src/optimization/grid_search.py
+# shl/optimization/grid_search.py
 import itertools
 from typing import Dict, List, Tuple
 import numpy as np
@@ -2127,7 +2127,7 @@ class WeightOptimizer:
 
 ### Step 13: Bayesian Optimization
 ```python
-# src/optimization/bayesian_opt.py
+# shl/optimization/bayesian_opt.py
 from skopt import gp_minimize
 from skopt.space import Real
 from skopt.utils import use_named_args
@@ -2299,7 +2299,7 @@ class BayesianWeightOptimizer:
 
 ### Step 14: Probability Regularization
 ```python
-# src/models/regularization.py
+# shl/models/regularization.py
 def regularize_extreme_probabilities(probs, shrinkage_factor=0.1):
     """Apply Bayesian shrinkage to extreme probabilities"""
     # Define prior (uniform)
@@ -2323,7 +2323,7 @@ def regularize_extreme_probabilities(probs, shrinkage_factor=0.1):
 
 ### Step 15: Complete Evaluation Suite
 ```python
-# src/evaluation/metrics.py
+# shl/evaluation/metrics.py
 def comprehensive_evaluation(predictions, actuals):
     """Calculate all relevant metrics"""
     metrics = {}
@@ -2358,7 +2358,7 @@ def comprehensive_evaluation(predictions, actuals):
 
 ### Step 16: Production Monitoring Dashboard with Alerts
 ```python
-# src/monitoring/dashboard.py
+# shl/monitoring/dashboard.py
 import streamlit as st
 from datetime import datetime, timedelta
 import pandas as pd
@@ -2438,7 +2438,7 @@ def create_monitoring_page():
         error_patterns = analyze_error_patterns(recent)
         st.dataframe(error_patterns)
 
-# src/monitoring/alerts.py
+# shl/monitoring/alerts.py
 def check_model_drift():
     """Check for model performance degradation"""
     alerts = []
