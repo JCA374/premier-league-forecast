@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+from pathlib import Path
 from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
@@ -636,7 +637,13 @@ def simulation_page():
 
     # Load data
     try:
-        results_df = pd.read_csv("data/clean/results.csv", parse_dates=['Date'])
+        results_path = Path("data/clean/results.csv")
+        if results_path.exists():
+            results_df = pd.read_csv(results_path, parse_dates=['Date'])
+        else:
+            st.warning("No cleaned results found. Please collect data first in the Data Collection tab.")
+            st.stop()
+
         current_team_set = set(results_df['HomeTeam'].dropna()) | set(results_df['AwayTeam'].dropna())
         upcoming_team_set = set()
 
@@ -671,7 +678,12 @@ def simulation_page():
             # Will load cleaned fixtures in simulation section
             fixtures_df = None
         else:
-            fixtures_df = pd.read_csv("data/clean/fixtures.csv", parse_dates=['Date'])
+            fixtures_file = Path("data/clean/fixtures.csv")
+            if not fixtures_file.exists():
+                st.warning("No fixtures file found. Please generate fixtures in the Data Collection tab.")
+                st.stop()
+
+            fixtures_df = pd.read_csv(fixtures_file, parse_dates=['Date'])
             fixtures_source = "generated_fixtures"
             st.info("📅 Using generated fixtures for simulation")
             upcoming_team_set = set(fixtures_df['HomeTeam'].dropna()) | set(fixtures_df['AwayTeam'].dropna())
