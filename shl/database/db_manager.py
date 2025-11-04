@@ -6,7 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import json
 from pathlib import Path
+import logging
 
+logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class DatabaseManager:
@@ -18,11 +20,30 @@ class DatabaseManager:
             if env_url:
                 self.database_url = env_url
             else:
-                project_root = Path(__file__).resolve().parents[2]
-                data_dir = project_root / "data" / "db"
-                data_dir.mkdir(parents=True, exist_ok=True)
+                # Use /tmp for Streamlit Cloud compatibility
+                # Check if we're running on Streamlit Cloud
+                if os.getenv('STREAMLIT_SHARING') or os.path.exists('/mount/src'):
+                    # Streamlit Cloud - use /tmp
+                    data_dir = Path("/tmp") / "shl_data"
+                    try:
+                        data_dir.mkdir(parents=True, exist_ok=True)
+                    except Exception as e:
+                        logger.warning(f"Could not create /tmp directory: {e}, using temp file")
+                        data_dir = Path("/tmp")
+                else:
+                    # Local development - use project directory
+                    project_root = Path(__file__).resolve().parents[2]
+                    data_dir = project_root / "data" / "db"
+                    try:
+                        data_dir.mkdir(parents=True, exist_ok=True)
+                    except Exception as e:
+                        logger.warning(f"Could not create data directory: {e}, using /tmp")
+                        data_dir = Path("/tmp") / "shl_data"
+                        data_dir.mkdir(parents=True, exist_ok=True)
+
                 default_db_path = data_dir / "shl.db"
                 self.database_url = f"sqlite:///{default_db_path}"
+                logger.info(f"Using database at: {default_db_path}")
         
         engine_kwargs = {}
         if self.database_url.startswith("sqlite"):
@@ -114,10 +135,10 @@ class DatabaseManager:
             
             # Create all tables
             self.metadata.create_all(self.engine)
-            print("Database tables created successfully")
-            
+            logger.info("Database tables created successfully")
+
         except Exception as e:
-            print(f"Error creating database tables: {e}")
+            logger.error(f"Error creating database tables: {e}")
     
     def save_matches(self, matches_df, match_type='mixed'):
         """Save match data to database"""
@@ -156,11 +177,11 @@ class DatabaseManager:
                 conn.execute(self.matches_table.insert(), matches_data)
                 conn.commit()
             
-            print(f"Saved {len(matches_data)} matches to database")
+            logger.info(f"Saved {len(matches_data)} matches to database")
             return True
-            
+
         except Exception as e:
-            print(f"Error saving matches: {e}")
+            logger.error(f"Error saving matches: {e}")
             return False
     
     def load_matches(self, match_type=None):
@@ -184,9 +205,9 @@ class DatabaseManager:
                 })
             
             return df
-            
+
         except Exception as e:
-            print(f"Error loading matches: {e}")
+            logger.error(f"Error loading matches: {e}")
             return pd.DataFrame()
     
     def save_team_statistics(self, team_stats_df):
@@ -218,11 +239,11 @@ class DatabaseManager:
                 conn.execute(self.team_stats_table.insert(), stats_data)
                 conn.commit()
             
-            print(f"Saved statistics for {len(stats_data)} teams")
+            logger.info(f"Saved statistics for {len(stats_data)} teams")
             return True
-            
+
         except Exception as e:
-            print(f"Error saving team statistics: {e}")
+            logger.error(f"Error saving team statistics: {e}")
             return False
     
     def load_team_statistics(self):
@@ -236,9 +257,9 @@ class DatabaseManager:
                 df = df.drop(columns=['id', 'created_at', 'updated_at'], errors='ignore')
             
             return df
-            
+
         except Exception as e:
-            print(f"Error loading team statistics: {e}")
+            logger.error(f"Error loading team statistics: {e}")
             return pd.DataFrame()
     
     def save_model_parameters(self, model):
@@ -261,11 +282,11 @@ class DatabaseManager:
                 conn.execute(self.model_params_table.insert(), [model_data])
                 conn.commit()
             
-            print("Model parameters saved to database")
+            logger.info("Model parameters saved to database")
             return True
-            
+
         except Exception as e:
-            print(f"Error saving model parameters: {e}")
+            logger.error(f"Error saving model parameters: {e}")
             return False
     
     def load_model_parameters(self):
@@ -288,9 +309,9 @@ class DatabaseManager:
             }
             
             return model_params
-            
+
         except Exception as e:
-            print(f"Error loading model parameters: {e}")
+            logger.error(f"Error loading model parameters: {e}")
             return None
     
     def save_simulation_results(self, simulation_results_df, simulation_id=None):
@@ -320,11 +341,11 @@ class DatabaseManager:
                 conn.execute(self.simulation_results_table.insert(), sim_data)
                 conn.commit()
             
-            print(f"Saved simulation results with ID: {simulation_id}")
+            logger.info(f"Saved simulation results with ID: {simulation_id}")
             return simulation_id
-            
+
         except Exception as e:
-            print(f"Error saving simulation results: {e}")
+            logger.error(f"Error saving simulation results: {e}")
             return None
     
     def load_simulation_results(self, simulation_id=None):
@@ -356,9 +377,9 @@ class DatabaseManager:
             )
             
             return pivot_df
-            
+
         except Exception as e:
-            print(f"Error loading simulation results: {e}")
+            logger.error(f"Error loading simulation results: {e}")
             return pd.DataFrame()
     
     def get_simulation_history(self):
@@ -373,9 +394,9 @@ class DatabaseManager:
             
             df = pd.read_sql(query, self.engine)
             return df
-            
+
         except Exception as e:
-            print(f"Error getting simulation history: {e}")
+            logger.error(f"Error getting simulation history: {e}")
             return pd.DataFrame()
     
     def test_connection(self):
@@ -385,5 +406,5 @@ class DatabaseManager:
                 result = conn.execute(text("SELECT 1"))
                 return True
         except Exception as e:
-            print(f"Database connection test failed: {e}")
+            logger.error(f"Database connection test failed: {e}")
             return False

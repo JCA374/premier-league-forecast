@@ -42,6 +42,9 @@ if 'db_manager' not in st.session_state:
         st.session_state.db_manager = DatabaseManager()
         st.session_state.db_connected = st.session_state.db_manager.test_connection()
     except Exception as e:
+        # Database initialization failed - continue without database
+        import logging
+        logging.warning(f"Database initialization failed: {e}")
         st.session_state.db_manager = None
         st.session_state.db_connected = False
 
