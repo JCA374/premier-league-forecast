@@ -94,7 +94,7 @@ def data_collection_page():
     if st.session_state.get('db_connected', False):
         st.success("🗄️ Database connected and ready")
     else:
-        st.warning("⚠️ Database not connected - using file storage only")
+        st.warning("⚠️ Database not connected. App functionality will be limited.")
 
     col1, col2 = st.columns(2)
 
@@ -140,9 +140,6 @@ def data_collection_page():
                     raw_data = scraper.scrape_matches(seasons=st.session_state.selected_years)
 
                     if raw_data is not None and not raw_data.empty:
-                        # Save raw data to files
-                        os.makedirs("data/raw", exist_ok=True)
-                        raw_data.to_csv("data/raw/fixtures_results_raw.csv", index=False)
                         years_str = ', '.join(map(str, sorted(st.session_state.selected_years)))
                         st.success(f"✅ Successfully scraped {len(raw_data)} matches from {len(st.session_state.selected_years)} years ({years_str})!")
                         st.dataframe(raw_data.head())
@@ -150,12 +147,6 @@ def data_collection_page():
                         # Clean data automatically
                         cleaner = DataCleaner()
                         results, fixtures = cleaner.clean_data(raw_data)
-
-                        # Save to files
-                        os.makedirs("data/clean", exist_ok=True)
-                        results.to_csv("data/clean/results.csv", index=False)
-                        fixtures.to_csv("data/clean/fixtures.csv", index=False)
-                        fixtures.to_csv("data/clean/upcoming_fixtures.csv", index=False)
 
                         # Save to database if connected
                         if st.session_state.get('db_connected', False):
@@ -165,9 +156,12 @@ def data_collection_page():
                                 if st.session_state.db_manager.save_matches(combined_data):
                                     st.success("✅ Data saved to database")
                                 else:
-                                    st.warning("⚠️ Could not save to database - using file storage")
+                                    st.warning("⚠️ Could not save to database")
                             except Exception as e:
                                 st.warning(f"⚠️ Database save failed: {str(e)}")
+                        else:
+                            st.warning("⚠️ Cannot save data. Database not connected.")
+
 
                         st.session_state.data_loaded = True
                         st.success(f"✅ Data cleaned: {len(results)} completed matches, {len(fixtures)} upcoming fixtures")
@@ -181,8 +175,7 @@ def data_collection_page():
     with col2:
         st.subheader("Data Status")
 
-        # Check database first, then files
-        db_data_available = False
+        # Check database first
         if st.session_state.get('db_connected', False):
             try:
                 db_results = st.session_state.db_manager.load_matches('result')
@@ -192,7 +185,6 @@ def data_collection_page():
                     st.success("✅ Data available in database")
                     st.metric("Completed Matches (DB)", len(db_results))
                     st.metric("Upcoming Fixtures (DB)", len(db_fixtures))
-                    db_data_available = True
                     st.session_state.data_loaded = True
 
                     # Show recent results from database
@@ -205,37 +197,8 @@ def data_collection_page():
                             st.write(f"{match['HomeTeam']} {match['FTHG']}-{match['FTAG']} {match['AwayTeam']}")
             except Exception as e:
                 st.warning(f"⚠️ Database error: {str(e)}")
-
-        # Fallback to file data if database not available
-        if not db_data_available:
-            results_exist = os.path.exists("data/clean/results.csv")
-            fixtures_exist = os.path.exists("data/clean/fixtures.csv")
-
-            if results_exist and fixtures_exist:
-                st.success("✅ Clean data files found")
-                results = pd.read_csv("data/clean/results.csv")
-                fixtures = pd.read_csv("data/clean/fixtures.csv")
-
-                st.metric("Completed Matches (Files)", len(results))
-                st.metric("Upcoming Fixtures (Files)", len(fixtures))
-
-                st.session_state.data_loaded = True
-
-                # Show recent results
-                if len(results) > 0:
-                    st.subheader("Recent Results (Files)")
-                    # Convert Date column to datetime if it's not already
-                    if 'Date' in results.columns:
-                        results['Date'] = pd.to_datetime(results['Date'], errors='coerce')
-                        # Sort by date descending and take the 5 most recent
-                        results_sorted = results.sort_values('Date', ascending=False)
-                        recent = results_sorted.head(5)
-                    else:
-                        recent = results.tail(5)
-                    for _, match in recent.iterrows():
-                        st.write(f"{match['HomeTeam']} {match['FTHG']}-{match['FTAG']} {match['AwayTeam']}")
-            else:
-                st.warning("⚠️ No data found. Please scrape data first.")
+        else:
+            st.warning("⚠️ No data found. Please connect to a database and scrape data.")
 
 def data_verification_page():
     st.header("🔍 Data Verification")
