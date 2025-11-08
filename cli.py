@@ -147,9 +147,8 @@ def run_simulation(n_simulations=10000):
     fixtures = pd.read_csv(fixtures_file)
 
     # Run simulation
-    simulator = MonteCarloSimulator(model)
+    simulator = MonteCarloSimulator(fixtures, model)
     results = simulator.simulate_season(
-        fixtures,
         n_simulations=n_simulations,
         progress_callback=lambda i, total: print(f"Progress: {i}/{total}", end='\r') if i % 1000 == 0 else None
     )
