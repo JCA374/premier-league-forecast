@@ -22,7 +22,7 @@ class PremierLeagueScraper:
     """
     Scraper for Premier League match data.
 
-    NOTE: This scraper currently uses SHL (Swedish Hockey League) data source as a template.
+    NOTE: This scraper currently uses SHL (Premier League) data source as a template.
     TODO: Update to use Premier League data sources (e.g., football-data.co.uk, Premier League API, etc.)
 
     Returns a combined DataFrame containing completed results (with FTHG/FTAG)
