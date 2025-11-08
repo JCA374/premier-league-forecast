@@ -148,9 +148,9 @@ def run_simulation(n_simulations=10000):
 
     # Run simulation
     simulator = MonteCarloSimulator(fixtures, model)
-    results = simulator.simulate_season(
+    results = simulator.run(
         n_simulations=n_simulations,
-        progress_callback=lambda i, total: print(f"Progress: {i}/{total}", end='\r') if i % 1000 == 0 else None
+        progress_callback=lambda progress: print(f"Progress: {progress:.1f}%", end='\r')
     )
 
     print()  # New line after progress
