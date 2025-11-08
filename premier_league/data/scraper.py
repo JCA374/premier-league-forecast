@@ -18,23 +18,28 @@ class SeasonInfo:
     regular_path: str  # Absolute path to regular-season overview page
 
 
-class SHLScraper:
+class PremierLeagueScraper:
     """
-    Scraper for SHL regular-season data sourced from stats.swehockey.se.
+    Scraper for Premier League match data.
+
+    NOTE: This scraper currently uses SHL (Premier League) data source as a template.
+    TODO: Update to use Premier League data sources (e.g., football-data.co.uk, Premier League API, etc.)
 
     Returns a combined DataFrame containing completed results (with FTHG/FTAG)
     and upcoming fixtures (with FTHG/FTAG set to NaN).
     """
 
-    BASE_URL = "https://stats.swehockey.se"
-    DEFAULT_SEASON_ID = "18263"  # 2025-26 at time of writing
+    # TODO: Update these URLs to Premier League data sources
+    BASE_URL = "https://stats.swehockey.se"  # TEMPORARY - needs Premier League source
+    DEFAULT_SEASON_ID = "18263"  # TEMPORARY - needs Premier League season ID
 
     DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
     FULL_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
     TIME_PATTERN = re.compile(r"^\d{1,2}:\d{2}$")
     SCORE_PATTERN = re.compile(r"^\d+\s*-\s*\d+$")
-    REGULAR_LABEL_KEYWORDS = ("shl", "elitserien", "regular", "grundserien")
-    EXCLUDED_LABEL_KEYWORDS = ("slutspel", "play", "kval", "cup", "final")
+    # TODO: Update keywords for Premier League data sources
+    REGULAR_LABEL_KEYWORDS = ("premier league", "epl", "regular", "league")  # Updated for Premier League
+    EXCLUDED_LABEL_KEYWORDS = ("playoff", "cup", "final", "champions", "europa")
 
     def __init__(self, session: Optional[requests.Session] = None, timeout: int = 30):
         self.timeout = timeout
@@ -57,7 +62,7 @@ class SHLScraper:
 
     def scrape_matches(self, seasons: Optional[Iterable[int]] = None) -> pd.DataFrame:
         """
-        Fetch historical SHL regular-season results and upcoming fixtures.
+        Fetch historical Premier League match results and upcoming fixtures.
 
         Args:
             seasons: Iterable of season start years (e.g. 2023 for 2023-24). When None,
@@ -76,7 +81,7 @@ class SHLScraper:
         for season_start in seasons:
             info = self.season_map.get(season_start)
             if not info:
-                self.logger.warning("Season %s not found in SHL schedule options", season_start)
+                self.logger.warning("Season %s not found in Premier League schedule options", season_start)
                 continue
 
             try:
@@ -90,7 +95,7 @@ class SHLScraper:
                 all_frames.append(pd.concat(season_frames, ignore_index=True))
 
         if not all_frames:
-            self.logger.warning("No SHL data collected for requested seasons")
+            self.logger.warning("No Premier League data collected for requested seasons")
             return pd.DataFrame(columns=["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "Season"])
 
         combined = pd.concat(all_frames, ignore_index=True)

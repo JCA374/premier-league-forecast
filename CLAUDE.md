@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an SHL (Swedish Hockey League) Monte Carlo simulation and forecasting application built with Streamlit. It predicts hockey match outcomes and season standings using statistical models (Poisson-based) and optionally integrates live betting odds for hybrid predictions.
+This is an Premier League (Premier League) Monte Carlo simulation and forecasting application built with Streamlit. It predicts football match outcomes and season standings using statistical models (Poisson-based) and optionally integrates live betting odds for hybrid predictions.
 
 ## Development Commands
 
@@ -39,7 +39,7 @@ The application supports both SQLite (default) and PostgreSQL:
 # Set PostgreSQL connection
 export DATABASE_URL="postgresql://user:password@host:port/dbname"
 
-# Default SQLite database is automatically created at: data/db/shl.db
+# Default SQLite database is automatically created at: data/db/premier_league.db
 ```
 
 ### Data Pipeline
@@ -48,8 +48,8 @@ Manual execution of key pipeline steps (normally done through the UI):
 
 ```bash
 # From Python console:
-from shl.data.scraper import SHLScraper
-scraper = SHLScraper()
+from shl.data.scraper import Premier LeagueScraper
+scraper = Premier LeagueScraper()
 raw_data = scraper.scrape_matches(seasons=[2024, 2025])
 
 # Clean data
@@ -65,7 +65,7 @@ The application follows a modular architecture under the `shl/` package:
 ### Core Modules
 
 - **`data/`**: Data collection and processing
-  - `scraper.py`: Web scraper for stats.swehockey.se (SHL's official stats site)
+  - `scraper.py`: Web scraper for stats.swefootball.se (Premier League's official stats site)
   - `cleaner.py`: Data cleaning and validation
   - `odds_api.py`: Integration with The-Odds-API for live betting odds
   - `odds_schema.py`: Pydantic schemas for odds data
@@ -100,7 +100,7 @@ The application follows a modular architecture under the `shl/` package:
 
 ### Data Flow
 
-1. **Scraping**: `SHLScraper` fetches match data from stats.swehockey.se
+1. **Scraping**: `Premier LeagueScraper` fetches match data from stats.swefootball.se
 2. **Cleaning**: `DataCleaner` separates completed results from upcoming fixtures
 3. **Strength Calculation**: `TeamStrengthCalculator` computes attack/defense ratings
 4. **Model Training**: `PoissonModel` learns from historical data
@@ -163,7 +163,7 @@ Historical data may use different column naming conventions. The `ColumnStandard
 The application looks for configuration in:
 - Environment variables: `DATABASE_URL`, `ODDS_API_KEY`
 - YAML config files (optional, loaded by `config_loader.py`)
-- Defaults: SQLite database at `data/db/shl.db`
+- Defaults: SQLite database at `data/db/premier_league.db`
 
 ## Common Development Patterns
 
@@ -227,7 +227,7 @@ The app uses session state for:
 
 ### Data Source
 
-The scraper targets `stats.swehockey.se`, which is the official SHL statistics website. The scraper:
+The scraper targets `stats.swefootball.se`, which is the official Premier League statistics website. The scraper:
 - Identifies regular season matches (excludes playoffs, qualifiers)
 - Handles both completed matches and upcoming fixtures
 - Parses Swedish date/time formats
@@ -251,6 +251,6 @@ Monte Carlo simulations can be computationally intensive:
 ### Team Name Consistency
 
 Team names must be consistent across all data sources:
-- Scraper extracts official team names from stats.swehockey.se
+- Scraper extracts official team names from stats.swefootball.se
 - Odds API may use different team names (handle via mapping if needed)
 - Column standardizer helps normalize column names but not team names themselves

@@ -1,5 +1,5 @@
 #!/bin/bash
-# SHL Forecast CLI Wrapper
+# Premier League Forecast CLI Wrapper
 # This script automatically activates the virtual environment and runs the CLI
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

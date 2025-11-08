@@ -24,7 +24,7 @@ class DatabaseManager:
                 # Check if we're running on Streamlit Cloud
                 if os.getenv('STREAMLIT_SHARING') or os.path.exists('/mount/src'):
                     # Streamlit Cloud - use /tmp
-                    data_dir = Path("/tmp") / "shl_data"
+                    data_dir = Path("/tmp") / "premier_league_data"
                     try:
                         data_dir.mkdir(parents=True, exist_ok=True)
                     except Exception as e:
@@ -38,10 +38,10 @@ class DatabaseManager:
                         data_dir.mkdir(parents=True, exist_ok=True)
                     except Exception as e:
                         logger.warning(f"Could not create data directory: {e}, using /tmp")
-                        data_dir = Path("/tmp") / "shl_data"
+                        data_dir = Path("/tmp") / "premier_league_data"
                         data_dir.mkdir(parents=True, exist_ok=True)
 
-                default_db_path = data_dir / "shl.db"
+                default_db_path = data_dir / "premier_league.db"
                 self.database_url = f"sqlite:///{default_db_path}"
                 logger.info(f"Using database at: {default_db_path}")
         

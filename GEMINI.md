@@ -1,12 +1,12 @@
 # Gemini Code Assistant Context
 
-This document provides context for the Gemini Code Assistant to understand the SHL prediction project.
+This document provides context for the Gemini Code Assistant to understand the Premier League prediction project.
 
 ## Project Overview
 
-This project is a Python-based application for forecasting Swedish Hockey League (SHL) outcomes. It uses a Streamlit web interface to control the process of data scraping, cleaning, model training, simulation, and visualization.
+This project is a Python-based application for forecasting Premier League (Premier League) outcomes. It uses a Streamlit web interface to control the process of data scraping, cleaning, model training, simulation, and visualization.
 
-The core of the project is a Poisson model that predicts the outcome of hockey games. The model is trained on historical data scraped from the official SHL stats website (`stats.swehockey.se`). The application can also integrate betting odds to create a more accurate hybrid model.
+The core of the project is a Poisson model that predicts the outcome of football games. The model is trained on historical data scraped from the official Premier League stats website (`stats.swefootball.se`). The application can also integrate betting odds to create a more accurate hybrid model.
 
 ### Key Technologies
 
@@ -22,7 +22,7 @@ The core of the project is a Poisson model that predicts the outcome of hockey g
 
 The project is structured into several components:
 
-1.  **Data Scraping (`shl.data.scraper`):** Scrapes match data from `stats.swehockey.se`.
+1.  **Data Scraping (`shl.data.scraper`):** Scrapes match data from `stats.swefootball.se`.
 2.  **Data Cleaning (`shl.data.cleaner`):** Cleans and preprocesses the scraped data.
 3.  **Team Strength Calculation (`shl.data.strength`):** Calculates team attack and defense strengths based on historical performance.
 4.  **Poisson Model (`shl.models.poisson_model`):** A Poisson distribution-based model to predict match outcomes. It can be trained with or without Maximum Likelihood Estimation (MLE).
