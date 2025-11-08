@@ -48,7 +48,7 @@ class MonteCarloSimulator:
         """Load upcoming fixtures directly from CSV with robust parsing"""
         try:
             # Import column standardizer
-            from shl.utils.column_standardizer import ColumnStandardizer
+            from premier_league.utils.column_standardizer import ColumnStandardizer
             
             # Read CSV with error handling
             df = pd.read_csv(filepath, on_bad_lines='skip')
@@ -72,7 +72,7 @@ class MonteCarloSimulator:
                 'Brynas IF': 'Brynäs IF',
                 'Skelleftea AIK': 'Skellefteå AIK',
                 'Orebro HK': 'Örebro HK',
-                'Modo Hockey': 'MoDo Hockey',
+                'Modo Football': 'MoDo Football',
                 'Linkoping HC': 'Linköping HC',
                 'Leksands IF': 'Leksands IF',
                 'Djurgarden': 'Djurgårdens IF',
@@ -89,7 +89,7 @@ class MonteCarloSimulator:
             shl_teams = {
                 'Brynäs IF', 'Djurgårdens IF', 'Färjestad BK', 'Frölunda HC',
                 'HV 71', 'IF Malmö Redhawks', 'Linköping HC', 'Leksands IF',
-                'Luleå HF', 'MoDo Hockey', 'Rögle BK', 'Skellefteå AIK',
+                'Luleå HF', 'MoDo Football', 'Rögle BK', 'Skellefteå AIK',
                 'Timrå IK', 'Växjö Lakers HC', 'Örebro HK'
             }
             

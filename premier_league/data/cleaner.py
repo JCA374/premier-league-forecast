@@ -33,8 +33,8 @@ class DataCleaner:
                 # If no fixtures found, get upcoming fixtures using enhanced scraper
                 print("No fixtures in data - getting upcoming fixtures from enhanced scraper")
                 try:
-                    from .scraper import SHLScraper
-                    scraper = SHLScraper()
+                    from .scraper import PremierLeagueScraper
+                    scraper = PremierLeagueScraper()
                     upcoming_fixtures = scraper.get_upcoming_fixtures()
                     
                     if not upcoming_fixtures.empty:

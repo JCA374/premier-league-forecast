@@ -1,4 +1,4 @@
-# SHL Forecast - CLI Quick Start
+# Premier League Forecast - CLI Quick Start
 
 ## 🚀 Get Started in 3 Commands
 

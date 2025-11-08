@@ -14,13 +14,13 @@ from datetime import datetime
 import json
 
 # Import custom modules
-from shl.data.scraper import SHLScraper
-from shl.data.cleaner import DataCleaner
-from shl.data.strength import TeamStrengthCalculator
-from shl.models.poisson_model import PoissonModel
-from shl.simulation.simulator import MonteCarloSimulator
-from shl.analysis.aggregator import ResultsAggregator
-from shl.database.db_manager import DatabaseManager
+from premier_league.data.scraper import PremierLeagueScraper
+from premier_league.data.cleaner import DataCleaner
+from premier_league.data.strength import TeamStrengthCalculator
+from premier_league.models.poisson_model import PoissonModel
+from premier_league.simulation.simulator import MonteCarloSimulator
+from premier_league.analysis.aggregator import ResultsAggregator
+from premier_league.database.db_manager import DatabaseManager
 
 
 def setup_directories():
@@ -45,7 +45,7 @@ def scrape_data(seasons=None):
         current_year = datetime.now().year
         seasons = [current_year - 1, current_year]
 
-    scraper = SHLScraper()
+    scraper = PremierLeagueScraper()
     raw_data = scraper.scrape_matches(seasons=seasons)
 
     if raw_data is not None and len(raw_data) > 0:

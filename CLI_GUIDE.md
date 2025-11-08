@@ -1,8 +1,8 @@
-# SHL Forecast - CLI Interface Guide
+# Premier League Forecast - CLI Interface Guide
 
 ## Quick Start
 
-The CLI provides command-line access to all major features of the SHL forecasting system.
+The CLI provides command-line access to all major features of the Premier League forecasting system.
 
 ### Basic Usage
 
@@ -17,7 +17,7 @@ python cli.py --help
 ## Available Commands
 
 ### 1. Data Scraping
-Scrape match data from stats.swehockey.se:
+Scrape match data from stats.swefootball.se:
 
 ```bash
 # Scrape current and previous season (default)

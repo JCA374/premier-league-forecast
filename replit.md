@@ -1,8 +1,8 @@
-# SHL Monte Carlo Forecast
+# Premier League Monte Carlo Forecast
 
 ## Overview
 
-This is a comprehensive Swedish Hockey League (SHL) prediction system that uses Monte Carlo simulation to forecast regular-season outcomes. The application combines web scraping from stats.swehockey.se, statistical modeling, and Monte Carlo simulation to project standings, playoff qualification likelihoods, and movement within the table.
+This is a comprehensive Premier League (Premier League) prediction system that uses Monte Carlo simulation to forecast regular-season outcomes. The application combines web scraping from stats.swefootball.se, statistical modeling, and Monte Carlo simulation to project standings, playoff qualification likelihoods, and movement within the table.
 
 The system is built with Python and Streamlit, featuring a modular architecture that separates data collection, cleaning, modeling, simulation, and visualization into distinct components.
 
@@ -19,7 +19,7 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 - **Pipeline Architecture**: Data flows through distinct stages: scraping → cleaning → modeling → simulation → analysis
 
 ### Data Processing Pipeline
-1. **Data Collection**: Web scraping SHL regular-season results from stats.swehockey.se
+1. **Data Collection**: Web scraping Premier League regular-season results from stats.swefootball.se
 2. **Data Cleaning**: Normalization of team names, date parsing, and data validation
 3. **Statistical Modeling**: Poisson distribution-based goal prediction model
 4. **Monte Carlo Simulation**: Multiple season simulations to generate probability distributions
@@ -28,7 +28,7 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 ## Key Components
 
 ### Data Layer (`shl/data/`)
-- **SHLScraper**: Web scraper for SHL regular-season data sourced from stats.swehockey.se
+- **Premier LeagueScraper**: Web scraper for Premier League regular-season data sourced from stats.swefootball.se
 - **DataCleaner**: Normalizes team names, parses dates, splits results from fixtures
 - **TeamStrengthCalculator**: Computes attack/defense strengths from historical performance
 
@@ -54,7 +54,7 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 
 ## Data Flow
 
-1. **Scraping**: Raw match data extracted from stats.swehockey.se
+1. **Scraping**: Raw match data extracted from stats.swefootball.se
 2. **Cleaning**: Data normalized and split into completed matches (results) and upcoming matches (fixtures)
 3. **Storage**: Data persisted in SQLite (default) with optional PostgreSQL support
 4. **Strength Calculation**: Team performance metrics calculated from historical results
@@ -90,7 +90,7 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 - Modular structure allows for easy testing of individual components
 
 ### Data Storage
-- **Primary**: Local SQLite database at `data/db/shl.db` (auto-created on first run)
+- **Primary**: Local SQLite database at `data/db/premier_league.db` (auto-created on first run)
 - **Optional**: Set `DATABASE_URL` to switch to PostgreSQL or any SQLAlchemy-compatible database
 - **Fallback**: CSV-based file storage for compatibility and backup
 - Database tables: matches, team_statistics, model_parameters, simulation_results, analysis_results
@@ -106,10 +106,10 @@ The system is built with Python and Streamlit, featuring a modular architecture 
 
 ```
 Changelog:
-- Nov 2025. Migrated pipeline from football-data feeds to stats.swehockey.se for SHL regular-season coverage.
-- Nov 2025. Added SHLScraper with season-aware schedule parsing (results + fixtures) and score detail extraction.
-- Nov 2025. Updated standings calculation to apply SHL point rules (regulation vs OT wins/losses).
-- Nov 2025. Switched default persistence to SQLite (`data/db/shl.db`) with optional DATABASE_URL override and refreshed odds configuration for SHL markets.
+- Nov 2025. Migrated pipeline from football-data feeds to stats.swefootball.se for Premier League regular-season coverage.
+- Nov 2025. Added Premier LeagueScraper with season-aware schedule parsing (results + fixtures) and score detail extraction.
+- Nov 2025. Updated standings calculation to apply Premier League point rules (regulation vs OT wins/losses).
+- Nov 2025. Switched default persistence to SQLite (`data/db/premier_league.db`) with optional DATABASE_URL override and refreshed odds configuration for Premier League markets.
 ```
 
 ## User Preferences
