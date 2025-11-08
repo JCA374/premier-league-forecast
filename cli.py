@@ -181,31 +181,44 @@ def analyze_results(input_file=None):
     print(f"📁 Loading: {input_file}")
 
     aggregator = ResultsAggregator()
-    analysis = aggregator.aggregate_results(sim_results)
+
+    # Get various analyses
+    basic_analysis = aggregator.analyze_results(sim_results)
+    championship_odds = aggregator.calculate_championship_odds(sim_results)
+    relegation_odds = aggregator.calculate_relegation_odds(sim_results)
+    expected_points = aggregator.calculate_expected_points(sim_results)
+
+    # Combine into single analysis dict
+    analysis = {
+        'basic_analysis': basic_analysis,
+        'championship_odds': championship_odds,
+        'relegation_odds': relegation_odds,
+        'expected_points': expected_points
+    }
 
     # Display key insights
     print("\n" + "="*60)
     print("🏆 CHAMPIONSHIP PROBABILITIES")
     print("="*60)
-    if 'championship_prob' in analysis:
-        champ_probs = analysis['championship_prob'].sort_values(ascending=False).head(10)
-        for team, prob in champ_probs.items():
+    if championship_odds:
+        sorted_champ = sorted(championship_odds.items(), key=lambda x: x[1], reverse=True)
+        for team, prob in sorted_champ[:10]:
             print(f"{team:20s}: {prob:6.2%}")
 
     print("\n" + "="*60)
     print("⬇️  RELEGATION PROBABILITIES")
     print("="*60)
-    if 'relegation_prob' in analysis:
-        rel_probs = analysis['relegation_prob'].sort_values(ascending=False).head(10)
-        for team, prob in rel_probs.items():
+    if relegation_odds:
+        sorted_releg = sorted(relegation_odds.items(), key=lambda x: x[1], reverse=True)
+        for team, prob in sorted_releg[:10]:
             print(f"{team:20s}: {prob:6.2%}")
 
     print("\n" + "="*60)
     print("📊 EXPECTED FINAL STANDINGS (by points)")
     print("="*60)
-    if 'expected_points' in analysis:
-        exp_points = analysis['expected_points'].sort_values(ascending=False)
-        for rank, (team, points) in enumerate(exp_points.items(), 1):
+    if expected_points:
+        sorted_points = sorted(expected_points.items(), key=lambda x: x[1], reverse=True)
+        for rank, (team, points) in enumerate(sorted_points, 1):
             print(f"{rank:2d}. {team:20s}: {points:5.1f} pts")
 
     # Save analysis
