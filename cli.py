@@ -108,8 +108,9 @@ def train_model(advanced=False):
 
     # Train model
     print(f"🤖 Training model (advanced={advanced})...")
-    model = PoissonModel()
-    model.fit(results, team_stats, fast_training=(not advanced))
+    # Use MLE and Dixon-Coles if advanced training requested
+    model = PoissonModel(use_mle=advanced, use_dixon_coles=advanced)
+    model.fit(results, team_stats)
 
     # Save model
     model_file = 'models/poisson_params.pkl'
